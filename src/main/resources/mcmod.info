@@ -1,0 +1,19 @@
+[
+  {
+    "modid": "tinkerdream",
+    "name": "TinkerDream",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "NmmOC7",
+      "DustW"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
