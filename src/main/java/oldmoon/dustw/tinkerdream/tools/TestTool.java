@@ -96,11 +96,14 @@ public class TestTool extends TinkerToolCore {
                 ItemStack stack = playerIn.getHeldItem(EnumHand.OFF_HAND);
 
                 if (stack.getItem() instanceof HorseMedal) {
-                    ((HorseMedal) stack.getItem()).initHorseMedal(worldIn, playerIn);
-                    entityHorse.readEntityFromNBT(stack.serializeNBT().getCompoundTag(TinkerDream.MOD_ID).getCompoundTag("horse"));
+                    NBTTagCompound nbt = stack.serializeNBT();
 
+                    if (!nbt.hasKey(TinkerDream.MOD_ID)) {
+                        ((HorseMedal) stack.getItem()).initHorseMedal(worldIn, playerIn);
+                    }
+
+                    entityHorse.readEntityFromNBT(nbt.getCompoundTag("horse"));
                     worldIn.spawnEntity(entityHorse);
-
                     playerIn.startRiding(entityHorse);
 
                     playerIn.getCooldownTracker().setCooldown(stack.getItem(), 100);

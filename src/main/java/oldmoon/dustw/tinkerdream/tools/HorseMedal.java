@@ -13,6 +13,7 @@ import oldmoon.dustw.tinkerdream.parts.ModPartsList;
 import oldmoon.dustw.tinkerdream.stats.HorseMedalCoreStats;
 import oldmoon.dustw.tinkerdream.stats.ModStatsList;
 import oldmoon.dustw.tinkerdream.util.StatsTypes;
+import oldmoon.dustw.tinkerdream.util.Util;
 import slimeknights.tconstruct.library.materials.HandleMaterialStats;
 import slimeknights.tconstruct.library.materials.IMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
@@ -45,8 +46,8 @@ public class HorseMedal extends TinkerToolCore {
         );
 
         this.addCategory(Category.NO_MELEE);
-        this.setTranslationKey(TinkerDream.MOD_ID + ".test_tool");
-        this.setRegistryName(TinkerDream.MOD_ID + ":test_tool");
+        this.setTranslationKey(TinkerDream.MOD_ID + ".horse_medal");
+        this.setRegistryName(TinkerDream.MOD_ID + ":horse_medal");
 
         ModToolsList.TOOLS_LIST.add(this);
     }
@@ -54,7 +55,7 @@ public class HorseMedal extends TinkerToolCore {
     public void initHorseMedal(World worldIn, EntityPlayer playerIn) {
         if (!worldIn.isRemote) {
             ItemStack stack = playerIn.getHeldItem(EnumHand.OFF_HAND);
-            HorseMedalCoreStats horseMedalCoreStats = this.getMaterialForPartForGuiRendering(0).getStatsOrUnknown(StatsTypes.HORSE_MEDAL_CORE);
+            HorseMedalCoreStats horseMedalCoreStats = (HorseMedalCoreStats) Util.getStatsFromTool((HorseMedal) stack.getItem(), 5, StatsTypes.HORSE_MEDAL_CORE);
 
             if (stack.serializeNBT().hasKey(TinkerDream.MOD_ID) && !(stack.getItem() instanceof HorseMedal)) {
                 return;
