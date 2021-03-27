@@ -9,5 +9,4 @@ public class ModItemsList {
     public static final ModItemsBase ICON = new ModItemsBase("icon");
 
     public static final CreativeTab MOD_TAB = new CreativeTab(TinkerDream.MOD_ID + ".tab", new ItemStack(ICON));
-
 }

@@ -1,4 +1,7 @@
 item.tinkerdream.test.name=测试材料
 material.tinkerdream.test.name=测试材料
 modifier.tinkerdream.test.name=测试特性
+item.tinkerdream.test_a.name=测试部件
+item.tinkerdream.test_tool.name=测试工具
+item.tinkerdream.test_tool.desc=用 来 测 试
 tinkerdream.player.message=%s

@@ -52,6 +52,14 @@ public class ClientProxy extends CommonProxy{
         testToolInfo.addSlotPosition(32 + 18, 41 - 18);
         testToolInfo.addSlotPosition(32 - 18, 41 + 18);
         TinkerRegistryClient.addToolBuilding(testToolInfo);
+
+        ToolBuildGuiInfo horseMedalCoreInfo = new ToolBuildGuiInfo(ModToolsList.HORSE_MEDAL);
+        horseMedalCoreInfo.addSlotPosition(32, 41);
+        horseMedalCoreInfo.addSlotPosition(32 + 18, 41 + 18);
+        horseMedalCoreInfo.addSlotPosition(32 + 18, 41 - 18);
+        horseMedalCoreInfo.addSlotPosition(32 - 18, 41 + 18);
+        horseMedalCoreInfo.addSlotPosition(32 - 18, 41 - 18);
+        TinkerRegistryClient.addToolBuilding(horseMedalCoreInfo);
     }
     
 }

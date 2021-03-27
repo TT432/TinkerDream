@@ -10,8 +10,11 @@ import oldmoon.dustw.tinkerdream.items.ModItemsBase;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsBase;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
+import oldmoon.dustw.tinkerdream.stats.ModStatsList;
 import oldmoon.dustw.tinkerdream.tools.ModToolsList;
 import slimeknights.tconstruct.library.TinkerRegistry;
+import slimeknights.tconstruct.library.materials.AbstractMaterialStats;
+import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.Pattern;
 import slimeknights.tconstruct.library.tools.TinkerToolCore;
@@ -30,10 +33,18 @@ public class RegistryHandler {
             event.getRegistry().register(item);
         }
 
+        for (AbstractMaterialStats stats: ModStatsList.STATS_LIST) {
+            Material.UNKNOWN.addStats(stats);
+        }
+
+        for (ModMaterialsBase material: ModMaterialsList.MATERIALS_LIST) {
+            material.registry();
+        }
+
         for (TinkerToolCore tool: ModToolsList.TOOLS_LIST) {
             event.getRegistry().register(tool);
-            TinkerDream.proxy.registerToolModel(tool);
             TinkerRegistry.registerToolForgeCrafting(tool);
+            TinkerDream.proxy.registerToolModel(tool);
         }
 
         for (ToolPart part: ModPartsList.PARTS_LIST) {
@@ -41,24 +52,7 @@ public class RegistryHandler {
             TinkerRegistry.registerToolPart(part);
             TinkerDream.proxy.registerToolPartModel(part);
             TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), part));
-
-            for (ToolCore toolCore : TinkerRegistry.getTools())
-            {
-                for (PartMaterialType partMaterialType : toolCore.getRequiredComponents())
-                {
-                    if (partMaterialType.getPossibleParts().contains(part))
-                    {
-                        ItemStack stencil = new ItemStack(TinkerTools.pattern);
-                        Pattern.setTagForPart(stencil, part);
-                        TinkerRegistry.registerStencilTableCrafting(stencil);
-                        return;
-                    }
-                }
-            }
         }
 
-        for (ModMaterialsBase material: ModMaterialsList.MATERIALS_LIST) {
-            material.registry();
-        }
     }
 }

@@ -1,9 +1,7 @@
 package oldmoon.dustw.tinkerdream.util;
 
-import slimeknights.tconstruct.library.materials.ExtraMaterialStats;
-import slimeknights.tconstruct.library.materials.HandleMaterialStats;
-import slimeknights.tconstruct.library.materials.HeadMaterialStats;
-import slimeknights.tconstruct.library.materials.IMaterialStats;
+import oldmoon.dustw.tinkerdream.stats.TestStats;
+import slimeknights.tconstruct.library.materials.*;
 import slimeknights.tconstruct.library.traits.ITrait;
 
 import java.util.ArrayList;
@@ -26,6 +24,11 @@ public class MaterialStatsHelper {
 
     public MaterialStatsHelper addExtraMaterialStats(int durability) {
         this.STATS_LIST.add(new ExtraMaterialStats(durability));
+        return this;
+    }
+
+    public MaterialStatsHelper addCustomStats(AbstractMaterialStats stats) {
+        this.STATS_LIST.add(stats);
         return this;
     }
 
