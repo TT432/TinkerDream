@@ -7,7 +7,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
 import oldmoon.dustw.tinkerdream.stats.HorseMedalCoreStats;
@@ -55,7 +59,7 @@ public class HorseMedal extends TinkerToolCore {
     public void initHorseMedal(World worldIn, EntityPlayer playerIn) {
         if (!worldIn.isRemote) {
             ItemStack stack = playerIn.getHeldItem(EnumHand.OFF_HAND);
-            HorseMedalCoreStats horseMedalCoreStats = (HorseMedalCoreStats) Util.getStatsFromTool((HorseMedal) stack.getItem(), 5, StatsTypes.HORSE_MEDAL_CORE);
+            HorseMedalCoreStats horseMedalCoreStats = (HorseMedalCoreStats) Util.getStatsFromTool(stack, StatsTypes.HORSE_MEDAL_CORE);
 
             if (stack.serializeNBT().hasKey(TinkerDream.MOD_ID) && !(stack.getItem() instanceof HorseMedal)) {
                 return;
@@ -63,10 +67,6 @@ public class HorseMedal extends TinkerToolCore {
 
             EntityHorse entityHorse = new EntityHorse(worldIn);
 
-            entityHorse.setWorld(worldIn);
-            entityHorse.setTamedBy(playerIn);
-            entityHorse.setHorseSaddled(true);
-            entityHorse.setPosition(playerIn.posX, playerIn.posY, playerIn.posZ);
             entityHorse.setJumpPower(1);
             entityHorse.setAIMoveSpeed(horseMedalCoreStats.getHorseSpeed());
             entityHorse.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(horseMedalCoreStats.getHorseHealth());
@@ -77,13 +77,51 @@ public class HorseMedal extends TinkerToolCore {
             NBTTagCompound horseNbt = new NBTTagCompound();
             entityHorse.writeEntityToNBT(horseNbt);
             modIdNbt.setTag("horse", horseNbt);
+            modIdNbt.setBoolean("once", true);
             nbt.setTag(TinkerDream.MOD_ID, modIdNbt);
 
-            stack.writeToNBT(nbt);
+            NBTTagCompound nbtTool = stack.serializeNBT();
+            if (!nbtTool.hasKey("tag")) {
+                nbtTool.setTag("tag", nbt);
+            }
+            else {
+                nbtTool.getCompoundTag("tag").merge(nbt);
+            }
+
+            stack.deserializeNBT(nbtTool);
+
+            entityHorse.setDead();
         }
     }
 
+    public void spawnHorse(World worldIn, EntityPlayer playerIn) {
+        if (!worldIn.isRemote) {
+            ItemStack stack = playerIn.getHeldItem(EnumHand.OFF_HAND);
 
+            if (playerIn.getCooldownTracker().hasCooldown(stack.getItem())) { return; }
+
+            NBTTagCompound nbt = stack.serializeNBT();
+
+            if (!Util.isExistForNbt(nbt, "tag", TinkerDream.MOD_ID, "once")) {
+                ((HorseMedal) stack.getItem()).initHorseMedal(worldIn, playerIn);
+            }
+
+            stack = playerIn.getHeldItem(EnumHand.OFF_HAND);
+            nbt = stack.serializeNBT();
+
+            EntityHorse entityHorse = new EntityHorse(worldIn);
+            entityHorse.readEntityFromNBT(nbt.getCompoundTag(TinkerDream.MOD_ID).getCompoundTag("horse"));
+
+            entityHorse.setHorseSaddled(true);
+            entityHorse.setPosition(playerIn.posX, playerIn.posY, playerIn.posZ);
+            entityHorse.setTamedBy(playerIn);
+
+            worldIn.spawnEntity(entityHorse);
+            playerIn.startRiding(entityHorse);
+
+            playerIn.getCooldownTracker().setCooldown(stack.getItem(), 100);
+        }
+    }
 
     @Override
     protected ToolNBT buildTagData(List<Material> materials) {

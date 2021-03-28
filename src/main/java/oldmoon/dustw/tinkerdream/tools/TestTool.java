@@ -13,11 +13,14 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootTableList;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
 import oldmoon.dustw.tinkerdream.util.StatsTypes;
+import oldmoon.dustw.tinkerdream.util.Util;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.tinkering.Category;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
@@ -88,27 +91,15 @@ public class TestTool extends TinkerToolCore {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if (playerIn.isRiding()) {
-
+            
         }
         else {
             if (!worldIn.isRemote) {
-                EntityHorse entityHorse = new EntityHorse(worldIn);
                 ItemStack stack = playerIn.getHeldItem(EnumHand.OFF_HAND);
 
                 if (stack.getItem() instanceof HorseMedal) {
-                    NBTTagCompound nbt = stack.serializeNBT();
-
-                    if (!nbt.hasKey(TinkerDream.MOD_ID)) {
-                        ((HorseMedal) stack.getItem()).initHorseMedal(worldIn, playerIn);
-                    }
-
-                    entityHorse.readEntityFromNBT(nbt.getCompoundTag("horse"));
-                    worldIn.spawnEntity(entityHorse);
-                    playerIn.startRiding(entityHorse);
-
-                    playerIn.getCooldownTracker().setCooldown(stack.getItem(), 100);
+                    ((HorseMedal) stack.getItem()).spawnHorse(worldIn, playerIn);
                 }
-
             }
         }
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));

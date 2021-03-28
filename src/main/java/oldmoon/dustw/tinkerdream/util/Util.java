@@ -1,24 +1,48 @@
 package oldmoon.dustw.tinkerdream.util;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.IMaterialStats;
-import slimeknights.tconstruct.library.tools.TinkerToolCore;
-
-import java.util.ArrayList;
 
 /**
  * @author NmmOC7, DustW
  */
 public class Util {
-    public static IMaterialStats getStatsFromTool(TinkerToolCore tool, int partAmount, String identifier) {
-        IMaterialStats stats = null;
+    public static IMaterialStats getStatsFromTool(ItemStack toolStack, String identifier) {
+        NBTTagCompound tag = toolStack.getTagCompound();
+        IMaterialStats stats;
+        NBTTagList toolMaterials = tag.getCompoundTag("TinkerData").getTagList("Materials", 8);
 
-        for (int i = 0; i < partAmount; i++) {
-            stats = tool.getMaterialForPartForGuiRendering(i).getStatsOrUnknown(identifier);
+        for (NBTBase material: toolMaterials) {
+            stats = TinkerRegistry.getMaterial(material.toString().split("\"")[1]).getStats(identifier);
+
             if (stats != null) {
-                break;
+                return stats;
             }
         }
 
-        return stats;
+        return null;
+    }
+
+    public static boolean isExistForNbt(NBTTagCompound nbt, String... keys) {
+        NBTTagCompound nbtTemp = nbt;
+
+        for (String key: keys) {
+            if (nbtTemp.hasKey(key)) {
+                for (String keyJ: nbtTemp.getCompoundTag(key).getKeySet()) {
+                    if (isExistForNbt(nbtTemp.getCompoundTag(key), keyJ)) {
+                        return true;
+                    };
+                }
+            }
+            else {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

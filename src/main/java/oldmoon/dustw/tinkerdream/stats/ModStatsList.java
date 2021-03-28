@@ -8,5 +8,5 @@ public class ModStatsList {
     public static final ArrayList<AbstractMaterialStats> STATS_LIST = new ArrayList<>();
 
     public static final TestStats TEST_STATS = new TestStats(12, 100);
-    public static final HorseMedalCoreStats HORSE_MEDAL_CORE_SATS = new HorseMedalCoreStats(10, 20, 2.5f, 0);
+    public static final HorseMedalCoreStats HORSE_MEDAL_CORE_SATS = new HorseMedalCoreStats(10, 40, 2.5f, 0);
 }
