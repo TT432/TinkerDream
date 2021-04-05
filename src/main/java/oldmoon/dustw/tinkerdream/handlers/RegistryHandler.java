@@ -6,7 +6,6 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import oldmoon.dustw.tinkerdream.TinkerDream;
-import oldmoon.dustw.tinkerdream.items.ModItemsBase;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsBase;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
@@ -15,12 +14,12 @@ import oldmoon.dustw.tinkerdream.tools.ModToolsList;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.AbstractMaterialStats;
 import slimeknights.tconstruct.library.materials.Material;
-import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.Pattern;
 import slimeknights.tconstruct.library.tools.TinkerToolCore;
-import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.tools.ToolPart;
 import slimeknights.tconstruct.tools.TinkerTools;
+
+import java.util.Collection;
 
 /**
  * @author NmmOC7, DustW
@@ -34,7 +33,11 @@ public class RegistryHandler {
         }
 
         for (AbstractMaterialStats stats: ModStatsList.STATS_LIST) {
-            Material.UNKNOWN.addStats(stats);
+            Collection<Material> materials = TinkerRegistry.getAllMaterials();
+
+            for (Material material: materials) {
+                material.addStats(stats);
+            }
         }
 
         for (ModMaterialsBase material: ModMaterialsList.MATERIALS_LIST) {
@@ -53,6 +56,5 @@ public class RegistryHandler {
             TinkerDream.proxy.registerToolPartModel(part);
             TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), part));
         }
-
     }
 }

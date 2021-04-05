@@ -1,8 +1,6 @@
 package oldmoon.dustw.tinkerdream.util;
 
-import oldmoon.dustw.tinkerdream.stats.TestStats;
 import slimeknights.tconstruct.library.materials.*;
-import slimeknights.tconstruct.library.traits.ITrait;
 
 import java.util.ArrayList;
 

@@ -8,6 +8,9 @@ import oldmoon.dustw.tinkerdream.TinkerDream;
 import slimeknights.tconstruct.library.traits.AbstractTrait;
 import slimeknights.tconstruct.library.traits.ITrait;
 
+/**
+ * @author DustW
+ */
 public class ModTraitList {
     public static final ITrait TEST_TRAIT = new AbstractTrait(TinkerDream.MOD_ID + ".test", 0xFF00FF00) {
         @Override

@@ -1,7 +1,5 @@
 package oldmoon.dustw.tinkerdream.proxy;
 
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -11,7 +9,6 @@ import oldmoon.dustw.tinkerdream.tools.ModToolsList;
 import slimeknights.tconstruct.common.ModelRegisterUtil;
 import slimeknights.tconstruct.library.TinkerRegistryClient;
 import slimeknights.tconstruct.library.client.ToolBuildGuiInfo;
-import slimeknights.tconstruct.library.tools.IToolPart;
 import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.tools.ToolPart;
 
@@ -52,14 +49,6 @@ public class ClientProxy extends CommonProxy{
         testToolInfo.addSlotPosition(32 + 18, 41 - 18);
         testToolInfo.addSlotPosition(32 - 18, 41 + 18);
         TinkerRegistryClient.addToolBuilding(testToolInfo);
-
-        ToolBuildGuiInfo horseMedalCoreInfo = new ToolBuildGuiInfo(ModToolsList.HORSE_MEDAL);
-        horseMedalCoreInfo.addSlotPosition(32, 41);
-        horseMedalCoreInfo.addSlotPosition(32 + 18, 41 + 18);
-        horseMedalCoreInfo.addSlotPosition(32 + 18, 41 - 18);
-        horseMedalCoreInfo.addSlotPosition(32 - 18, 41 + 18);
-        horseMedalCoreInfo.addSlotPosition(32 - 18, 41 - 18);
-        TinkerRegistryClient.addToolBuilding(horseMedalCoreInfo);
     }
     
 }

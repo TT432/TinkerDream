@@ -1,11 +1,8 @@
 package oldmoon.dustw.tinkerdream.proxy;
 
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import oldmoon.dustw.tinkerdream.materials.ModMaterialsBase;
-import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
 import slimeknights.tconstruct.library.tools.ToolCore;
 import slimeknights.tconstruct.library.tools.ToolPart;
 

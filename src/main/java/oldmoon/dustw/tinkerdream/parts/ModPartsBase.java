@@ -4,17 +4,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import oldmoon.dustw.tinkerdream.TinkerDream;
-import oldmoon.dustw.tinkerdream.items.ModItemsBase;
-import oldmoon.dustw.tinkerdream.items.ModItemsList;
-import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
 import slimeknights.tconstruct.common.config.Config;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.Material;
 import slimeknights.tconstruct.library.materials.MaterialTypes;
 import slimeknights.tconstruct.library.tools.ToolPart;
-import slimeknights.tconstruct.tools.TinkerMaterials;
-import slimeknights.tconstruct.tools.TinkerModifiers;
-import slimeknights.tconstruct.tools.TinkerTools;
 
 /**
  * @author NmmOC7

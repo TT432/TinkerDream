@@ -4,9 +4,11 @@ import slimeknights.tconstruct.library.tools.TinkerToolCore;
 
 import java.util.ArrayList;
 
+/**
+ * @author NmmOC7
+ */
 public class ModToolsList {
     public static final ArrayList<TinkerToolCore> TOOLS_LIST = new ArrayList<>();
 
-    public static final TestTool TEST_TOOL = new TestTool();
-    public static final HorseMedal HORSE_MEDAL = new HorseMedal();
+    public static final ToolLance TEST_TOOL = new ToolLance();
 }

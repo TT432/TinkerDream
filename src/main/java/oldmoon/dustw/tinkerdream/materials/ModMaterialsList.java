@@ -1,13 +1,10 @@
 package oldmoon.dustw.tinkerdream.materials;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.stats.ModStatsList;
 import oldmoon.dustw.tinkerdream.trait.ModTraitList;
 import oldmoon.dustw.tinkerdream.util.MaterialStatsHelper;
 import oldmoon.dustw.tinkerdream.util.MaterialTypes;
-import slimeknights.mantle.client.CreativeTab;
 
 import java.util.ArrayList;
 
@@ -25,7 +22,6 @@ public class ModMaterialsList {
                                 .addHandleMaterialStats(15, 0.8f)
                                 .addExtraMaterialStats(30)
                                 .addCustomStats(ModStatsList.TEST_STATS)
-                                .addCustomStats(ModStatsList.HORSE_MEDAL_CORE_SATS)
                                 .getList())
                 .addTrait(ModTraitList.TEST_TRAIT, MaterialTypes.BASE);
 }

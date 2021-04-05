@@ -1,12 +1,8 @@
 package oldmoon.dustw.tinkerdream.items;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
-import slimeknights.mantle.client.CreativeTab;
-
-import java.util.ArrayList;
 
 /**
  * @author DustW

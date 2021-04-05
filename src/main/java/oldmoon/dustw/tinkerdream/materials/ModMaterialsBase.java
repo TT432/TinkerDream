@@ -1,7 +1,6 @@
 package oldmoon.dustw.tinkerdream.materials;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.items.ModItemsBase;
