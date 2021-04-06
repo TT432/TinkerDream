@@ -10,5 +10,5 @@ import java.util.ArrayList;
 public class ModToolsList {
     public static final ArrayList<TinkerToolCore> TOOLS_LIST = new ArrayList<>();
 
-    public static final ToolLance TEST_TOOL = new ToolLance();
+    public static final ToolLance LANCE = new ToolLance();
 }

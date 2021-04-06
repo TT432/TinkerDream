@@ -21,7 +21,7 @@ public class ModMaterialsList {
                                 .addHeadMaterialStats(100, 1, 1, 3)
                                 .addHandleMaterialStats(15, 0.8f)
                                 .addExtraMaterialStats(30)
-                                .addCustomStats(ModStatsList.TEST_STATS)
+                                .addCustomStats(ModStatsList.LANCE_HEAD_STATS)
                                 .getList())
                 .addTrait(ModTraitList.TEST_TRAIT, MaterialTypes.BASE);
 }

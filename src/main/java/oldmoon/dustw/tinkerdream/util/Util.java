@@ -1,13 +1,24 @@
 package oldmoon.dustw.tinkerdream.util;
 
+import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import oldmoon.dustw.tinkerdream.TinkerDream;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.IMaterialStats;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author NmmOC7, DustW
@@ -63,5 +74,21 @@ public class Util {
 
     public static double getSprintDistance(Entity entity) {
         return Util.pythagorasTheorem(false, entity.motionX, entity.motionZ);
+    }
+
+    public static double getAttackDamage(ItemStack stack) {
+        return ((AttributeModifier) stack
+                    .getAttributeModifiers(EntityEquipmentSlot.MAINHAND)
+                    .get("generic.attackDamage")
+                    .toArray()[0]
+                ).getAmount();
+    }
+
+    public static void addPotion(EntityLivingBase entity, Potion potion, int level, float seconds) {
+        entity.addPotionEffect(new PotionEffect(potion, (int) (seconds * 20) + 1, level));
+    }
+
+    public static ResourceLocation getIcon(String name) {
+        return new ResourceLocation(TinkerDream.MOD_ID, String.format("textures/potions/%s.png",name));
     }
 }

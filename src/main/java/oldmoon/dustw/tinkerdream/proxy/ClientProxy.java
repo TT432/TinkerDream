@@ -44,10 +44,11 @@ public class ClientProxy extends CommonProxy{
 
     @Override
     public void initToolGuis() {
-        ToolBuildGuiInfo testToolInfo = new ToolBuildGuiInfo(ModToolsList.TEST_TOOL);
-        testToolInfo.addSlotPosition(32, 41);
-        testToolInfo.addSlotPosition(32 + 18, 41 - 18);
-        testToolInfo.addSlotPosition(32 - 18, 41 + 18);
+        ToolBuildGuiInfo testToolInfo = new ToolBuildGuiInfo(ModToolsList.LANCE);
+        testToolInfo.addSlotPosition(32 + 20, 42 - 20);
+        testToolInfo.addSlotPosition(32 - 19, 42 + 1);
+        testToolInfo.addSlotPosition(32 + 1, 42 - 1);
+        testToolInfo.addSlotPosition(32 - 21, 42 + 21);
         TinkerRegistryClient.addToolBuilding(testToolInfo);
     }
     

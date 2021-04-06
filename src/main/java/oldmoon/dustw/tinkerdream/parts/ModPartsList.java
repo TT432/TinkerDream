@@ -12,5 +12,5 @@ import java.util.ArrayList;
 public class ModPartsList {
     public static final ArrayList<ToolPart> PARTS_LIST = new ArrayList<>();
 
-    public static final ModPartsBase TEST_PART_A = new ModPartsBase("test_a", Material.VALUE_Ingot * 3, MaterialTypes.HEAD);
+    public static final ModPartsBase LANCE_HEAD = new ModPartsBase("lance_head", Material.VALUE_Ingot * 3, MaterialTypes.HEAD);
 }

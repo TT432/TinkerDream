@@ -10,5 +10,5 @@ import java.util.ArrayList;
 public class ModStatsList {
     public static final ArrayList<AbstractMaterialStats> STATS_LIST = new ArrayList<>();
 
-    public static final TestStats TEST_STATS = new TestStats(12, 100);
+    public static final LanceHeadStats LANCE_HEAD_STATS = new LanceHeadStats(12, 100);
 }

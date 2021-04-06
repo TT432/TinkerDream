@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * @author NmmOC7
  */
-public class TestStats extends AbstractMaterialStats {
+public class LanceHeadStats extends AbstractMaterialStats {
     public final float attack;
     public final int durability;
 
-    public TestStats(float attack, int durability) {
+    public LanceHeadStats(float attack, int durability) {
         super(StatsTypes.TEST_A);
         this.attack = attack;
         this.durability = durability;

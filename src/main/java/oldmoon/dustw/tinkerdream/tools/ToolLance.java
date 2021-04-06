@@ -1,13 +1,18 @@
 package oldmoon.dustw.tinkerdream.tools;
 
+import com.google.common.collect.Multimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionHelper;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.*;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
@@ -16,6 +21,8 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
+import oldmoon.dustw.tinkerdream.potion.ModPotionList;
+import oldmoon.dustw.tinkerdream.potion.potions.ArmorBreaking;
 import oldmoon.dustw.tinkerdream.util.StatsTypes;
 import oldmoon.dustw.tinkerdream.util.Util;
 import oldmoon.dustw.tinkerdream.util.fork.EntityFinders;
@@ -36,19 +43,20 @@ import java.util.List;
  * @author NmmOC7
  */
 public class ToolLance extends TinkerToolCore {
-    private static PartMaterialType partMaterialType = new PartMaterialType(ModPartsList.TEST_PART_A, StatsTypes.TEST_A);
+    private static PartMaterialType partMaterialType = new PartMaterialType(ModPartsList.LANCE_HEAD, StatsTypes.TEST_A);
 
     public static final float DURABILITY_MODIFIER = 1.5f;
 
     public ToolLance() {
-        super(partMaterialType,
-                PartMaterialType.head(TinkerTools.swordBlade),
-                PartMaterialType.handle(TinkerTools.toolRod)
+        super(  partMaterialType,
+                PartMaterialType.extra(TinkerTools.largePlate),
+                PartMaterialType.handle(TinkerTools.toughToolRod),
+                PartMaterialType.handle(TinkerTools.toughToolRod)
         );
 
         this.addCategory(Category.WEAPON);
-        this.setTranslationKey(TinkerDream.MOD_ID + ".test_tool");
-        this.setRegistryName(TinkerDream.MOD_ID + ":test_tool");
+        this.setTranslationKey(TinkerDream.MOD_ID + ".lance");
+        this.setRegistryName(TinkerDream.MOD_ID + ":lance");
 
         ModToolsList.TOOLS_LIST.add(this);
     }
@@ -131,9 +139,11 @@ public class ToolLance extends TinkerToolCore {
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer) {
+            int time = Math.min(timeLeft, 100) / 100;
+
             EntityPlayer player = ((EntityPlayer) entityLiving);
             player.addExhaustion(0.2F);
-            player.getCooldownTracker().setCooldown(stack.getItem(), 100);
+            player.getCooldownTracker().setCooldown(stack.getItem(), 300);
 
             EntityHorse horse = (EntityHorse) player.getRidingEntity();
 
@@ -147,16 +157,22 @@ public class ToolLance extends TinkerToolCore {
 
                 Util.entitySprint(horse, speed, 0);
 
-                double attackDistance = (Util.getSprintDistance(horse) + 3) * 2;
+                double attackDistance = (Util.getSprintDistance(horse) + (3 * time)) * 2;
 
                 List<? extends Entity> entities = EntityFinders.facingHeight(horse, 3, attackDistance, 2, EntitySelectors.IS_ALIVE);
 
                 for (Entity entity : entities) {
-                    if (!(entity instanceof EntityPlayer) && entity instanceof EntityLivingBase) {
+                    if (!entity.equals(player) && entity instanceof EntityLivingBase) {
                         player.sendMessage(new TextComponentString(entity.toString()));
 
-                        ToolHelper.attackEntity(stack, this, player, entity, null, false);
-                        entity.attackEntityFrom(DamageSource.causePlayerDamage(player), stack.getItemDamage() / 1000f);
+                        if (!worldIn.isRemote) {
+                            float attackDamage = (float) ((((stack.getMaxDamage() - stack.getItemDamage()) / 20f) * time * Util.getAttackDamage(stack)) / this.attackSpeed());
+
+                            ToolHelper.attackEntity(stack, this, player, entity, null, false);
+                            ((EntityLivingBase) entity).setHealth(((EntityLivingBase) entity).getHealth() - attackDamage);
+                        }
+
+                        Util.addPotion((EntityLivingBase) entity, ModPotionList.ARMOR_BREAKING, 5, 15);
 
                         TConstruct.proxy.spawnAttackParticle(Particles.FRYPAN_ATTACK, entity, 0.3);
 
@@ -164,8 +180,9 @@ public class ToolLance extends TinkerToolCore {
                     }
                 }
 
-                stack.setItemDamage(-1);
-                ToolHelper.breakTool(stack, player);
+                if (entities.toArray().length > 1) {
+                    ToolHelper.breakTool(stack, player);
+                }
             }
         }
 

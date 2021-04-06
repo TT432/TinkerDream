@@ -2,6 +2,7 @@ package oldmoon.dustw.tinkerdream.handlers;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -9,6 +10,7 @@ import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsBase;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
+import oldmoon.dustw.tinkerdream.potion.ModPotionList;
 import oldmoon.dustw.tinkerdream.stats.ModStatsList;
 import oldmoon.dustw.tinkerdream.tools.ModToolsList;
 import slimeknights.tconstruct.library.TinkerRegistry;
@@ -55,6 +57,13 @@ public class RegistryHandler {
             TinkerRegistry.registerToolPart(part);
             TinkerDream.proxy.registerToolPartModel(part);
             TinkerRegistry.registerStencilTableCrafting(Pattern.setTagForPart(new ItemStack(TinkerTools.pattern), part));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPotionRegistry(RegistryEvent.Register<Potion> event) {
+        for (Potion potion: ModPotionList.POTION_LIST) {
+            event.getRegistry().register(potion);
         }
     }
 }
