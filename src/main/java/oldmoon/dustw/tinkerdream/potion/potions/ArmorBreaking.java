@@ -1,15 +1,7 @@
 package oldmoon.dustw.tinkerdream.potion.potions;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.ResourceLocation;
-import oldmoon.dustw.tinkerdream.TinkerDream;
-import oldmoon.dustw.tinkerdream.potion.ModPotionList;
 import oldmoon.dustw.tinkerdream.potion.fork.BasePotion;
 import oldmoon.dustw.tinkerdream.util.Util;
-
-import javax.annotation.Nullable;
 
 /**
  * @author DustW

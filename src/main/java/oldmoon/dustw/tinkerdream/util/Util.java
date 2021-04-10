@@ -1,6 +1,5 @@
 package oldmoon.dustw.tinkerdream.util;
 
-import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -13,17 +12,19 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.IMaterialStats;
-
-import java.util.Collection;
-import java.util.HashSet;
+import slimeknights.tconstruct.library.utils.TagUtil;
+import slimeknights.tconstruct.tools.modifiers.ModReinforced;
 
 /**
  * @author NmmOC7, DustW
  */
 public class Util {
+    public static double radians = Math.PI / 180;
+
     public static IMaterialStats getStatsFromTool(ItemStack toolStack, String identifier) {
         NBTTagCompound tag = toolStack.getTagCompound();
         IMaterialStats stats;
@@ -90,5 +91,16 @@ public class Util {
 
     public static ResourceLocation getIcon(String name) {
         return new ResourceLocation(TinkerDream.MOD_ID, String.format("textures/potions/%s.png",name));
+    }
+
+    /**
+     * 确定匠魂装备是否不毁
+     */
+    public static boolean isUnbreakable(ItemStack stack) {
+        return TagUtil.getTagSafe(stack).getBoolean(ModReinforced.TAG_UNBREAKABLE);
+    }
+
+    public static Vec3d getLookFinishPos(EntityLivingBase entity, double distance) {
+        return entity.getPositionEyes(1f).add(entity.getLookVec().scale(distance));
     }
 }

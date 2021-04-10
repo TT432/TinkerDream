@@ -1,28 +1,21 @@
 package oldmoon.dustw.tinkerdream.tools;
 
-import com.google.common.collect.Multimap;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionHelper;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.MouseEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.Mod;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
 import oldmoon.dustw.tinkerdream.potion.ModPotionList;
-import oldmoon.dustw.tinkerdream.potion.potions.ArmorBreaking;
 import oldmoon.dustw.tinkerdream.util.StatsTypes;
 import oldmoon.dustw.tinkerdream.util.Util;
 import oldmoon.dustw.tinkerdream.util.fork.EntityFinders;
@@ -33,7 +26,6 @@ import slimeknights.tconstruct.library.tinkering.Category;
 import slimeknights.tconstruct.library.tinkering.PartMaterialType;
 import slimeknights.tconstruct.library.tools.TinkerToolCore;
 import slimeknights.tconstruct.library.tools.ToolNBT;
-import slimeknights.tconstruct.library.utils.EntityUtil;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 import slimeknights.tconstruct.tools.TinkerTools;
 
@@ -65,16 +57,14 @@ public class ToolLance extends TinkerToolCore {
     protected ToolNBT buildTagData(List<Material> materials) {
         ToolNBT data = buildDefaultTag(materials);
 
-        data.attack += 0.5f;
         data.durability *= DURABILITY_MODIFIER;
-        data.attackSpeedMultiplier = 0.7f;
 
         return data;
     }
 
     @Override
     public float damagePotential() {
-        return 1.1f;
+        return 1.3f;
     }
 
     @Override
@@ -85,6 +75,11 @@ public class ToolLance extends TinkerToolCore {
     @Override
     public float getRepairModifierForPart(int index) {
         return DURABILITY_MODIFIER;
+    }
+
+    @Override
+    public float damageCutoff() {
+        return 20.0f;
     }
 
     @Override
@@ -113,6 +108,15 @@ public class ToolLance extends TinkerToolCore {
         if (!ToolHelper.isBroken(playerIn.getHeldItem(EnumHand.MAIN_HAND))) {
             if (playerIn.isRiding()) {
                 ItemStack itemStackIn = playerIn.getHeldItem(handIn);
+
+                if (!ToolConfig.unbreakableLance) {
+                    if (Util.isUnbreakable(itemStackIn) && !worldIn.isRemote) {
+                        playerIn.sendMessage(new TextComponentTranslation("message.tinkerdream.lance.unbreakerror"));
+
+                        return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+                    }
+                }
+
                 playerIn.setActiveHand(handIn);
                 return ActionResult.newResult(EnumActionResult.SUCCESS, itemStackIn);
             }
@@ -172,7 +176,7 @@ public class ToolLance extends TinkerToolCore {
                             ((EntityLivingBase) entity).setHealth(((EntityLivingBase) entity).getHealth() - attackDamage);
                         }
 
-                        Util.addPotion((EntityLivingBase) entity, ModPotionList.ARMOR_BREAKING, 5, 15);
+                        Util.addPotion((EntityLivingBase) entity, ModPotionList.ARMOR_BREAKING, 1, 15);
 
                         TConstruct.proxy.spawnAttackParticle(Particles.FRYPAN_ATTACK, entity, 0.3);
 

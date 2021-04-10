@@ -60,4 +60,4 @@ dependencies {
     compile "curse.maven:tinkerstoolleveling-250957:2630860"
 }
 
-// sourceSets { main { output.resourcesDir = output.classesDir } }
+sourceSets { main { output.resourcesDir = output.classesDir } }

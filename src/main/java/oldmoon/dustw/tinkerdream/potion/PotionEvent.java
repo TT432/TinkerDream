@@ -20,7 +20,7 @@ public class PotionEvent {
 
         if (!event.isCanceled()) {
             if (beHurtEntity.isPotionActive(ModPotionList.ARMOR_BREAKING) && !world.isRemote) {
-                beHurtEntity.setHealth(beHurtEntity.getHealth() - (damageAmount / 20));
+                event.setAmount(damageAmount * 1.5f);
             }
         }
     }

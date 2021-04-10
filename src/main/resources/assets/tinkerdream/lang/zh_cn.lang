@@ -3,4 +3,6 @@ material.tinkerdream.test.name=测试材料
 modifier.tinkerdream.test.name=测试特性
 item.tinkerdream.lance_head.name=枪头
 item.tinkerdream.lance.name=骑枪
-item.tinkerdream.lance.desc=低攻速且能绕过牌子
+item.tinkerdream.lance.desc=攻速很低，但具有攻击距离长的优势\n能够击破牌子
+
+message.tinkerdream.lance.unbreakerror=[Tinker Dream] 骑枪不可用！ 因为它拥有不毁！
