@@ -11,7 +11,7 @@ import oldmoon.dustw.tinkerdream.materials.ModMaterialsBase;
 import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
 import oldmoon.dustw.tinkerdream.potion.ModPotionList;
-import oldmoon.dustw.tinkerdream.stats.ModStatsList;
+import oldmoon.dustw.tinkerdream.materials.stats.ModStatsList;
 import oldmoon.dustw.tinkerdream.tools.ModToolsList;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.AbstractMaterialStats;

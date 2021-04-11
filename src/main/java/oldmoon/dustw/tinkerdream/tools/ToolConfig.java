@@ -12,4 +12,9 @@ public final class ToolConfig {
     @Config.Name("Use Unbreakable Lance")
     @Config.RequiresMcRestart
     public static boolean unbreakableLance = false;
+
+    @Config.Comment("If true, player can use durability package when lance HAVE unbreakable!")
+    @Config.Name("Use Unbreakable Durability Package")
+    @Config.RequiresMcRestart
+    public static boolean unbreakableDurabilityPackage = false;
 }

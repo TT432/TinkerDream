@@ -1,7 +1,7 @@
 package oldmoon.dustw.tinkerdream.materials;
 
 import net.minecraft.item.Item;
-import oldmoon.dustw.tinkerdream.stats.ModStatsList;
+import oldmoon.dustw.tinkerdream.materials.stats.ModStatsList;
 import oldmoon.dustw.tinkerdream.trait.ModTraitList;
 import oldmoon.dustw.tinkerdream.util.MaterialStatsHelper;
 import oldmoon.dustw.tinkerdream.util.MaterialTypes;

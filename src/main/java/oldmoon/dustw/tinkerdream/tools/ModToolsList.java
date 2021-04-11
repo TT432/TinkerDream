@@ -11,4 +11,5 @@ public class ModToolsList {
     public static final ArrayList<TinkerToolCore> TOOLS_LIST = new ArrayList<>();
 
     public static final ToolLance LANCE = new ToolLance();
+    public static final ToolDurabilityPackage DURABILITY_PACKAGE = new ToolDurabilityPackage();
 }

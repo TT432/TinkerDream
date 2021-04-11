@@ -1,8 +1,18 @@
 item.tinkerdream.test.name=测试材料
 material.tinkerdream.test.name=测试材料
 modifier.tinkerdream.test.name=测试特性
+
+# parts
 item.tinkerdream.lance_head.name=枪头
+item.tinkerdream.interaction_core.name=交互核心
+
+# tools
 item.tinkerdream.lance.name=骑枪
 item.tinkerdream.lance.desc=攻速很低，但具有攻击距离长的优势\n能够击破牌子
 
+item.tinkerdream.durability_package.name=耐久包
+item.tinkerdream.durability_package.desc=无法攻击\n部分武器/工具坏掉时右键可以恢复耐久
+
+# message
 message.tinkerdream.lance.unbreakerror=[Tinker Dream] 骑枪不可用！ 因为它拥有不毁！
+message.tinkerdream.durability_package.unbreakerror=[Tinker Dream] 发现不可用耐久包，因为它拥有不毁！

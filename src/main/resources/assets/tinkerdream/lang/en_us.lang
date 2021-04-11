@@ -1,4 +1,20 @@
 item.tinkerdream.test.name=Test Material
-material.test.material.name=Test Material
-item.tinkerdream.test_a.name=Test Material
+
+
+material.tinkerdream.test.name=test material
+modifier.tinkerdream.test.name=test modifier
+
+# parts
+item.tinkerdream.lance_head.name=Lance Head
+item.tinkerdream.interaction_core.name=Interaction Core
+
+# tools
+item.tinkerdream.lance.name=Lance
+item.tinkerdream.lance.desc=Low attack speed, but long attack distance.\nCan disable shield.
+
+item.tinkerdream.durability_package.name=Durability Package
+item.tinkerdream.durability_package.desc=Can't attack\nPart tool can heal durability on broken.
+
+# message
 message.tinkerdream.lance.unbreakerror=[Tinker Dream] You don't use it, because it unbreakable.
+message.tinkerdream.durability_package.unbreakerror=[Tinker Dream] You don't use it, because it unbreakable.

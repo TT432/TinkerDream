@@ -1,7 +1,6 @@
-package oldmoon.dustw.tinkerdream.stats;
+package oldmoon.dustw.tinkerdream.materials.stats;
 
 import com.google.common.collect.ImmutableList;
-import oldmoon.dustw.tinkerdream.util.StatsTypes;
 import slimeknights.tconstruct.library.Util;
 import slimeknights.tconstruct.library.materials.AbstractMaterialStats;
 import slimeknights.tconstruct.library.materials.HeadMaterialStats;
@@ -16,7 +15,7 @@ public class LanceHeadStats extends AbstractMaterialStats {
     public final int durability;
 
     public LanceHeadStats(float attack, int durability) {
-        super(StatsTypes.TEST_A);
+        super(StatsTypes.LANCE_HEAD);
         this.attack = attack;
         this.durability = durability;
 

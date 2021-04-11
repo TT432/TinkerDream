@@ -41,14 +41,14 @@ public class ToolsEvent {
     public static void onToolsCrafting(TinkerCraftingEvent.ToolCraftingEvent event) {
         ItemStack stack = event.getItemStack();
         EntityPlayer player = event.getPlayer();
-        float attackDamage = ToolHelper.getActualAttack(stack);
+        float attackDamage = ToolHelper.getActualDamage(stack, player);
         float attackSpeed = ToolHelper.getActualAttackSpeed(stack);
 
         if (stack.getItem() instanceof ToolLance) {
-            NBTHelper.addAttribute(stack.serializeNBT(), AttributeTypes.ATTACK_DAMAGE, attackDamage, 1);
-            NBTHelper.addAttribute(stack.serializeNBT(), AttributeTypes.ATTACK_SPEED, attackSpeed, 1);
+            NBTHelper.addAttribute(stack.getTagCompound(), AttributeTypes.ATTACK_DAMAGE, attackDamage, 1);
+            NBTHelper.addAttribute(stack.getTagCompound(), AttributeTypes.ATTACK_SPEED, attackSpeed, 1);
 
-            NBTHelper.addAttribute(stack.serializeNBT(), AttributeTypes.REACH_DISTANCE, 6, 1);
+            NBTHelper.addAttribute(stack.getTagCompound(), AttributeTypes.REACH_DISTANCE, 6, 1);
         }
     }
 }

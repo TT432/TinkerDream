@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import oldmoon.dustw.tinkerdream.TinkerDream;
 import oldmoon.dustw.tinkerdream.parts.ModPartsList;
 import oldmoon.dustw.tinkerdream.potion.ModPotionList;
-import oldmoon.dustw.tinkerdream.util.StatsTypes;
+import oldmoon.dustw.tinkerdream.materials.stats.StatsTypes;
 import oldmoon.dustw.tinkerdream.util.Util;
 import oldmoon.dustw.tinkerdream.util.fork.EntityFinders;
 import slimeknights.tconstruct.TConstruct;
@@ -35,7 +35,7 @@ import java.util.List;
  * @author NmmOC7
  */
 public class ToolLance extends TinkerToolCore {
-    private static PartMaterialType partMaterialType = new PartMaterialType(ModPartsList.LANCE_HEAD, StatsTypes.TEST_A);
+    private static PartMaterialType partMaterialType = new PartMaterialType(ModPartsList.LANCE_HEAD, StatsTypes.LANCE_HEAD);
 
     public static final float DURABILITY_MODIFIER = 1.5f;
 
@@ -137,17 +137,24 @@ public class ToolLance extends TinkerToolCore {
                 }
             }
         }
+        else {
+            ModToolsList.DURABILITY_PACKAGE.onItemRightClick(worldIn, playerIn, handIn);
+        }
+
         return new ActionResult<>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
     }
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
         if (entityLiving instanceof EntityPlayer) {
-            int time = Math.min(timeLeft, 100) / 100;
+            float time = Math.min(timeLeft, 100) / 100f;
+
+            if (time < 0.2f) {
+                return;
+            }
 
             EntityPlayer player = ((EntityPlayer) entityLiving);
             player.addExhaustion(0.2F);
-            player.getCooldownTracker().setCooldown(stack.getItem(), 300);
 
             EntityHorse horse = (EntityHorse) player.getRidingEntity();
 
@@ -167,10 +174,12 @@ public class ToolLance extends TinkerToolCore {
 
                 for (Entity entity : entities) {
                     if (!entity.equals(player) && entity instanceof EntityLivingBase) {
-                        player.sendMessage(new TextComponentString(entity.toString()));
-
                         if (!worldIn.isRemote) {
-                            float attackDamage = (float) ((((stack.getMaxDamage() - stack.getItemDamage()) / 20f) * time * Util.getAttackDamage(stack)) / this.attackSpeed());
+                            float trueAttack = ToolHelper.getActualDamage(stack, player);
+                            float trueSpeed = ToolHelper.getActualAttackSpeed(stack);
+                            int trueDamage = stack.getMaxDamage() - stack.getItemDamage();
+
+                            float attackDamage = ((trueDamage / 20f) * time * trueAttack) / trueSpeed;
 
                             ToolHelper.attackEntity(stack, this, player, entity, null, false);
                             ((EntityLivingBase) entity).setHealth(((EntityLivingBase) entity).getHealth() - attackDamage);
@@ -184,9 +193,14 @@ public class ToolLance extends TinkerToolCore {
                     }
                 }
 
+                int coolDownTime = 600;
+
                 if (entities.toArray().length > 1) {
                     ToolHelper.breakTool(stack, player);
+                    coolDownTime = 300;
                 }
+
+                player.getCooldownTracker().setCooldown(stack.getItem(), coolDownTime);
             }
         }
 

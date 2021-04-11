@@ -44,12 +44,20 @@ public class ClientProxy extends CommonProxy{
 
     @Override
     public void initToolGuis() {
-        ToolBuildGuiInfo testToolInfo = new ToolBuildGuiInfo(ModToolsList.LANCE);
-        testToolInfo.addSlotPosition(32 + 20, 42 - 20);
-        testToolInfo.addSlotPosition(32 - 19, 42 + 1);
-        testToolInfo.addSlotPosition(32 + 1, 42 - 1);
-        testToolInfo.addSlotPosition(32 - 21, 42 + 21);
-        TinkerRegistryClient.addToolBuilding(testToolInfo);
+        ToolBuildGuiInfo lanceInfo = new ToolBuildGuiInfo(ModToolsList.LANCE);
+        lanceInfo.addSlotPosition(32 + 20, 42 - 20);
+        lanceInfo.addSlotPosition(32 - 19, 42 + 1);
+        lanceInfo.addSlotPosition(32 + 1, 42 - 1);
+        lanceInfo.addSlotPosition(32 - 21, 42 + 21);
+        TinkerRegistryClient.addToolBuilding(lanceInfo);
+
+        ToolBuildGuiInfo durabilityPackageInfo = new ToolBuildGuiInfo(ModToolsList.DURABILITY_PACKAGE);
+        durabilityPackageInfo.addSlotPosition(32, 42);
+        durabilityPackageInfo.addSlotPosition(32 + 20, 42);
+        durabilityPackageInfo.addSlotPosition(32, 42 - 20);
+        durabilityPackageInfo.addSlotPosition(32 - 20, 42);
+        durabilityPackageInfo.addSlotPosition(32, 42 + 20);
+        TinkerRegistryClient.addToolBuilding(durabilityPackageInfo);
     }
     
 }

@@ -3,13 +3,16 @@ package oldmoon.dustw.tinkerdream.util;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -18,6 +21,8 @@ import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.IMaterialStats;
 import slimeknights.tconstruct.library.utils.TagUtil;
 import slimeknights.tconstruct.tools.modifiers.ModReinforced;
+
+import java.util.ArrayList;
 
 /**
  * @author NmmOC7, DustW
@@ -77,14 +82,6 @@ public class Util {
         return Util.pythagorasTheorem(false, entity.motionX, entity.motionZ);
     }
 
-    public static double getAttackDamage(ItemStack stack) {
-        return ((AttributeModifier) stack
-                    .getAttributeModifiers(EntityEquipmentSlot.MAINHAND)
-                    .get("generic.attackDamage")
-                    .toArray()[0]
-                ).getAmount();
-    }
-
     public static void addPotion(EntityLivingBase entity, Potion potion, int level, float seconds) {
         entity.addPotionEffect(new PotionEffect(potion, (int) (seconds * 20) + 1, level));
     }
@@ -102,5 +99,18 @@ public class Util {
 
     public static Vec3d getLookFinishPos(EntityLivingBase entity, double distance) {
         return entity.getPositionEyes(1f).add(entity.getLookVec().scale(distance));
+    }
+
+    public static ItemStack[] getItemStackFromInventory(EntityPlayer player, Item item) {
+        NonNullList<ItemStack> inventory = player.inventory.mainInventory;
+        ArrayList<ItemStack> itemStacks = new ArrayList<>();
+
+        for (ItemStack stack: inventory) {
+            if (stack.getItem() == item) {
+                itemStacks.add(stack);
+            }
+        }
+
+        return itemStacks.toArray(new ItemStack[]{});
     }
 }
