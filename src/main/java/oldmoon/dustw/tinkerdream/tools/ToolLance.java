@@ -5,7 +5,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumActionResult;
@@ -29,6 +31,7 @@ import slimeknights.tconstruct.library.tools.ToolNBT;
 import slimeknights.tconstruct.library.utils.ToolHelper;
 import slimeknights.tconstruct.tools.TinkerTools;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**
@@ -60,6 +63,12 @@ public class ToolLance extends TinkerToolCore {
         data.durability *= DURABILITY_MODIFIER;
 
         return data;
+    }
+
+    @Nonnull
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack) {
+        return EnumAction.BOW;
     }
 
     @Override
@@ -176,16 +185,20 @@ public class ToolLance extends TinkerToolCore {
                     if (!entity.equals(player) && entity instanceof EntityLivingBase) {
                         if (!worldIn.isRemote) {
                             float trueAttack = ToolHelper.getActualDamage(stack, player);
-                            float trueSpeed = ToolHelper.getActualAttackSpeed(stack);
+                            float trueAttackSpeed = ToolHelper.getActualAttackSpeed(stack);
                             int trueDamage = stack.getMaxDamage() - stack.getItemDamage();
 
-                            float attackDamage = ((trueDamage / 20f) * time * trueAttack) / trueSpeed;
+                            float attackDamage = ((trueDamage / 20f) * time * trueAttack) / trueAttackSpeed;
+                            int attackAmount = (int) (attackDamage / trueAttack);
 
                             ToolHelper.attackEntity(stack, this, player, entity, null, false);
-                            ((EntityLivingBase) entity).setHealth(((EntityLivingBase) entity).getHealth() - attackDamage);
-                        }
+                            Util.addPotion((EntityLivingBase) entity, ModPotionList.ARMOR_BREAKING, 1, 15);
 
-                        Util.addPotion((EntityLivingBase) entity, ModPotionList.ARMOR_BREAKING, 1, 15);
+                            for (int i = 0; i< attackAmount; i++) {
+                                entity.hurtResistantTime = 0;
+                                ToolHelper.attackEntity(stack, this, player, entity, null, false);
+                            }
+                        }
 
                         TConstruct.proxy.spawnAttackParticle(Particles.FRYPAN_ATTACK, entity, 0.3);
 
@@ -193,11 +206,11 @@ public class ToolLance extends TinkerToolCore {
                     }
                 }
 
-                int coolDownTime = 600;
+                int coolDownTime = 500;
 
-                if (entities.toArray().length > 1) {
+                if (entities.toArray().length > 1){
                     ToolHelper.breakTool(stack, player);
-                    coolDownTime = 300;
+                    coolDownTime = 250 + (entities.toArray().length * 10);
                 }
 
                 player.getCooldownTracker().setCooldown(stack.getItem(), coolDownTime);
@@ -205,5 +218,19 @@ public class ToolLance extends TinkerToolCore {
         }
 
         super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
+    }
+
+    /**
+     * Returns true if this item should be rotated by 180 degrees around the Y axis when being held in an entities
+     * hands.
+     */
+    @Override
+    public boolean shouldRotateAroundWhenRendering() {
+        return true;
+    }
+
+    @Override
+    public void addMaterialTraits(NBTTagCompound root, List<Material> materials) {
+        super.addMaterialTraits(root, materials);
     }
 }

@@ -1,0 +1,10 @@
+{
+  "textures": {
+    "layer0": "tinkerdream:item/lance/head",
+    "layer1": "tinkerdream:item/lance/extra",
+    "layer2": "tinkerdream:item/lance/handle_1",
+    "layer3": "tinkerdream:item/lance/handle_2",
+    "broken0": "tinkerdream:item/common/none",
+    "broken2": "tinkerdream:item/lance/handle_1_broken"
+  }
+}

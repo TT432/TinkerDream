@@ -96,7 +96,7 @@ public class ToolDurabilityPackage extends TinkerToolCore {
                             ToolHelper.breakTool(tool, playerIn);
                         }
                         else {
-                            tool.setItemDamage(trueDamage - (maxDamage - durabilityCounter));
+                            tool.setItemDamage(tool.getItemDamage() + (maxDamage - durabilityCounter));
                             durabilityCounter = maxDamage;
                         }
                     }

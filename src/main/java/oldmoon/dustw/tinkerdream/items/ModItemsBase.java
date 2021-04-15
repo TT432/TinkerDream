@@ -8,7 +8,6 @@ import oldmoon.dustw.tinkerdream.materials.ModMaterialsList;
  * @author DustW
  */
 public class ModItemsBase extends Item {
-
     public ModItemsBase(String registryName) {
         this.setRegistryName(TinkerDream.MOD_ID + ":" + registryName);
         this.setTranslationKey(TinkerDream.MOD_ID + "." + registryName);
