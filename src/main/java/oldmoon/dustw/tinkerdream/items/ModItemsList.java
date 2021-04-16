@@ -41,8 +41,6 @@ public class ModItemsList {
             if (!worldIn.isRemote) {
                 EntityMagicMissile magicMissile = new EntityMagicMissile(worldIn, playerIn);
 
-                TinkerDream.logger.info("log!");
-
                 magicMissile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYawHead, 0, 1, 0);
                 worldIn.spawnEntity(magicMissile);
             }
