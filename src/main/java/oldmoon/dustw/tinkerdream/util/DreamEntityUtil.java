@@ -32,6 +32,7 @@ public class DreamEntityUtil {
 
                 if (distanceTemp < distance) {
                     entityTemp = (EntityLiving) entity;
+                    distance = distanceTemp;
                 }
             }
         }

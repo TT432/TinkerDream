@@ -38,12 +38,9 @@ public class ModItemsList {
     public static final ModItemsBase RIGHT_CLICK_TEST_1 = new ModItemsBase("right_test_1"){
         @Override
         public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-            EntityMagicMissile magicMissile = new EntityMagicMissile(worldIn, playerIn);
-
-            magicMissile.setSeekerDistance(10);
-            magicMissile.setSeekerStrength(2);
-
             if (!worldIn.isRemote) {
+                EntityMagicMissile magicMissile = new EntityMagicMissile(worldIn, playerIn);
+
                 magicMissile.shoot(playerIn, playerIn.rotationPitch, playerIn.rotationYawHead, 0, 1, 0);
                 worldIn.spawnEntity(magicMissile);
             }
